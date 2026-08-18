@@ -1,6 +1,8 @@
 import os
 import sys
 
+from src.components import model_trainer
+from src.components.model_trainer import ModelTrainer
 from src.components import data_transformation
 from src.exception import CustomException
 from src.logger import logging
@@ -50,4 +52,7 @@ if __name__ == "__main__":
     ingestion = DataIngestion()
     train_data, test_data = ingestion.initiate_data_injection()
     data_transformation = DataTransformation()
-    data_transformation.initiate_data_transformation(train_data, test_data)
+    train_arr, test_arr, _ = data_transformation.initiate_data_transformation(train_data, test_data)
+
+    model_trainer = ModelTrainer()
+    print(model_trainer.initiate_model_trainer(train_arr, test_arr))
