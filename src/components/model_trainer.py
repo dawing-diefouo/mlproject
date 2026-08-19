@@ -45,8 +45,39 @@ class ModelTrainer:
                 "CatBoostRegressor": CatBoostRegressor(),
                 "XGBRegressor": XGBRegressor(),
             }
+            params = {
+                "DecisionTreeRegressor": {
+                    'criterion': ['squared_error', 'friedman_mse','absolute_error', 'poisson' ],
+                },
+                "RandomForestRegressor": {
+                    'n_estimators': [8, 16, 32, 64, 128, 256],
+                },
+                "GradientBoostingRegressor": {
+                    'learning_rate': [.1, .01, .05, .001],
+                    'subsample': [0.6, 0.7, 0.75, 0.80, 0.85, 0.9],
+                    'n_estimators': [8, 16, 32, 64, 128, 256]
+                },
+                "LinearRegression": {},
+                "KNeighborsRegressor": {
+                    'n_neighbors': [5, 7, 9, 11],
+                },
+                "CatBoostRegressor": {
+                    'depth': [6, 8, 10],
+                    'learning_rate': [.1, .01, 0.1],
+                    'iterations': [30, 50, 100],
+                },
+                "XGBRegressor": {
+                    'learning_rate': [.1, .01, .05, .001],
+                    'n_estimators': [8, 16, 32, 64, 128, 256],
+                },
+                'AdaBoostRegressor': {
+                    'learning_rate': [.1, .01, .05, .001],
+                    'n_estimators': [8, 16, 32, 64, 128, 256],
+                }
+            }
 
-            model_report : dict = evaluate_model(x_train = X_train, y_train = y_train, x_test = X_test, y_test = y_test, models = model)
+            model_report : dict = evaluate_model(x_train = X_train, y_train = y_train, x_test = X_test,
+                                                 y_test = y_test, models = model, param=params)
 
             ## to get best model score from dict
             best_model_score = max(sorted(model_report.values()))
